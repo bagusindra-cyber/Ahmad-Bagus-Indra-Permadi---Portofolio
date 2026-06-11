@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CV-Ahmad Bagus Indra Permadi</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Fira+Code:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<!-- Link ke file CSS eksternal -->
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+<canvas id="particles"></canvas>
+<div id="loading-bar"></div>
+
+<!-- NOTIFICATION STACK -->
+<div class="notification-stack" id="notifStack"></div>
+
+<!-- TITLEBAR -->
+<div class="titlebar">
+  <div class="window-dots">
+    <div class="dot red" title="Close"></div>
+    <div class="dot yellow" title="Minimize"></div>
+    <div class="dot green" title="Maximize"></div>
+  </div>
+  
+  <div class="mobile-hamburger" onclick="toggleMobileMenu()">
+    <i class="fas fa-bars"></i>
+  </div>
+
+  <div class="titlebar-menu">
+    <span>File</span><span>Edit</span><span>Selection</span><span>View</span><span>Go</span><span>Run</span><span>Terminal</span><span>Help</span>
+  </div>
+  <div class="titlebar-title">Ahmad Bagus Indra Permadi - Portfolio.jsx</div>
+</div>
+
+<!-- ACTIVITY BAR -->
+<div class="activity-bar">
+  <div class="activity-icon active" onclick="showSection('about')" title="Explorer">
+    <i class="fas fa-copy"></i>
+  </div>
+  <div class="activity-icon" onclick="showSection('skills')" title="Search">
+    <i class="fas fa-search"></i>
+  </div>
+  <div class="activity-icon" onclick="showSection('experience')" title="Source Control">
+    <i class="fas fa-code-branch"></i>
+  </div>
+  <div class="activity-icon" onclick="showSection('projects')" title="Run & Debug">
+    <i class="fas fa-play-circle"></i>
+  </div>
+  <div class="activity-icon" onclick="showSection('comments')" title="Comments" style="position:relative">
+    <i class="fas fa-comments"></i>
+    <div class="bell-badge" id="bellBadge">0</div>
+  </div>
+  <div class="activity-icon" style="margin-top:auto" title="Settings">
+    <i class="fas fa-cog"></i>
+  </div>
+</div>
+
+<!-- TABS BAR -->
+<div class="tabs-bar" id="tabsBar">
+  <div class="tab active" onclick="showSection('about')" id="tab-about">
+    <i class="tab-icon html fas fa-file-code"></i> index.html
+  </div>
+  <div class="tab" onclick="showSection('skills')" id="tab-skills">
+    <i class="tab-icon js fas fa-file-code"></i> skills.js
+  </div>
+  <div class="tab" onclick="showSection('experience')" id="tab-experience">
+    <i class="tab-icon json fas fa-file-code"></i> experience.json
+  </div>
+  <div class="tab" onclick="showSection('projects')" id="tab-projects">
+    <i class="tab-icon py fas fa-file-code"></i> terminal.sh
+  </div>
+  <div class="tab" onclick="showSection('comments')" id="tab-comments">
+    <i class="tab-icon md fas fa-file-code"></i> comments.md
+  </div>
+</div>
+
+<!-- STATUSBAR -->
+<div class="statusbar">
+  <div class="statusbar-item"><i class="fas fa-code-branch"></i> main</div>
+  <div class="statusbar-item"><i class="fas fa-sync-alt"></i> 0</div>
+  <div class="statusbar-item"><i class="fas fa-exclamation-triangle"></i> 0 <i class="fas fa-times-circle"></i> 0</div>
+  <div class="statusbar-right">
+    <div class="statusbar-item">UTF-8</div>
+    <div class="statusbar-item">JavaScript JSX</div>
+    <div class="statusbar-item">Ll 1, Col 1</div>
+    <div class="statusbar-item"><i class="fas fa-bell"></i></div>
+  </div>
+</div>
+
+<!-- MAIN WRAPPER -->
+<div class="main-wrapper">
+
+  <!-- ══ ABOUT SECTION ══ -->
+  <div class="section active" id="section-about">
+    <!-- HEADER WITH LOGO -->
+    <!-- Ganti 'foto-background-kamu.jpg' dengan nama file foto yang ingin kamu jadikan background -->
+    <div class="header-section">
+      <div class="header-inner">
+        <div class="logo-area">
+          <div class="logo-placeholder" title="Program Studi Teknik Informatika">
+            <img src="tif.png">
+          </div>
+          <div class="logo-placeholder" title="Fakultas Teknik UTM">
+            <img src="teknik.png">
+          </div>
+          <div class="logo-placeholder" title="Universitas Trunodjoyo Madura">
+            <img src="univ.png">
+          </div>
+          
+          <canvas id="kanvasBulat" width="200" height="200" style="pointer-events: none; flex-shrink: 0;"></canvas>
+
+          <div class="header-titles-wrapper">
+            <div class="header-title">// Ahmad Bagus Indra Permadi</div>
+            <div class="header-title2">// Mahasiswa S1 Teknik Informatika</div>
+          </div>
+          <div class="header-badges">
+            <span class="badge blue"><i class="fas fa-university"></i> Universitas Trunojoyo Madura</span>
+            <span class="badge green"><i class="fas fa-code"></i> Fakultas Teknik</span>
+            <span class="badge purple"><i class="fas fa-calendar"></i> S1 Teknik Informatika </span>
+            <span class="badge orange"><i class="fas fa-map-marker-alt"></i> Tuban, Indonesia</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EDITOR LAYOUT -->
+    <div class="editor-layout">
+      <div class="sidebar">
+        <div class="sidebar-header">Explorer</div>
+        <div class="file-tree">
+          <div class="tree-folder"><i class="fas fa-chevron-down" style="font-size:10px"></i> <i class="fas fa-folder-open"></i> PORTFOLIO</div>
+          <div class="tree-children">
+            <div class="tree-file active" onclick="showSection('about')"><i class="fab fa-html5" style="color:#e44d26"></i> index.html</div>
+            <div class="tree-file" onclick="showSection('skills')"><i class="fab fa-js-square" style="color:#f7df1e"></i> skills.js</div>
+            <div class="tree-file" onclick="showSection('experience')"><i class="fas fa-database" style="color:#fbc02d"></i> experience.json</div>
+            <div class="tree-file" onclick="showSection('projects')"><i class="fas fa-terminal" style="color:#42a5f5"></i> terminal.sh</div>
+            <div class="tree-file" onclick="showSection('comments')"><i class="fas fa-comment-dots" style="color:#98c379"></i> comments.md</div>
+          </div>
+          <div style="margin-top:16px">
+          <div class="tree-folder"><i class="fas fa-chevron-down" style="font-size:10px"></i> <i class="fas fa-folder-open"></i> PENDIDIKAN</div>
+          <div class="tree-children">
+            <div class="tree-file"><i class="fas fa-graduation-cap" style="color:#c678dd"></i> s1-informatika.md</div>
+            <div class="tree-file"><i class="fas fa-school" style="color:#61afef"></i> smkn-widang.md</div>
+            <div class="tree-file"><i class="fas fa-book" style="color:#98c379"></i> smpn2-widang.md</div>
+          </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="editor-content">
+        <div class="code-view">
+          <div class="line-numbers" id="aboutLineNums"></div>
+          <div class="code-body">
+            <div style="margin-bottom:32px">
+              <span class="code-comment">/**</span><br>
+              <span class="code-comment">&nbsp;* @author  Ahmad Bagus Indra Permadi</span><br>
+              <span class="code-comment">&nbsp;* @college Universitas Trunojoyo Madura</span><br>
+              <span class="code-comment">&nbsp;* @study program   Teknik Informatika — Fakultas Teknik</span><br>
+              <span class="code-comment">&nbsp;* @batch   2025</span><br>
+              <span class="code-comment">&nbsp;*/</span><br><br>
+
+              <span class="code-keyword">const</span> <span class="code-variable">profile</span> <span class="code-operator">=</span> <span class="code-operator">{</span><br>
+              <span class="code-line indent1"><span class="code-variable">name</span><span class="code-operator">:</span> <span class="code-string">"Ahmad Bagus Indra Permadi"</span><span class="code-operator">,</span></span>
+              <span class="code-line indent1"><span class="code-variable">university</span><span class="code-operator">:</span> <span class="code-string">"Universitas Trunojoyo Madura"</span><span class="code-operator">,</span></span>
+              <span class="code-line indent1"><span class="code-variable">faculty</span><span class="code-operator">:</span> <span class="code-string">"Teknik"</span><span class="code-operator">,</span></span>
+              <span class="code-line indent1"><span class="code-variable">study program</span><span class="code-operator">:</span> <span class="code-string">"Teknik Informatika"</span><span class="code-operator">,</span></span>
+              <span class="code-line indent1"><span class="code-variable">batch</span><span class="code-operator">:</span> <span class="code-variable">2025</span><span class="code-operator">,</span></span>
+              <span class="code-line indent1"><span class="code-variable">status</span><span class="code-operator">:</span> <span class="code-string">"Active Student"</span><span class="code-operator">,</span></span>
+              <span class="code-operator">};</span><br><br>
+
+              <span class="code-comment">// Education History</span><br>
+              <span class="code-keyword">const</span> <span class="code-variable">education</span> <span class="code-operator">=</span> <span class="code-operator">[</span><br>
+              <span class="code-line indent1"><span class="code-operator">{</span> <span class="code-variable">level</span><span class="code-operator">:</span> <span class="code-string">"S1"</span><span class="code-operator">,</span> <span class="code-variable">school</span><span class="code-operator">:</span> <span class="code-string">"Universitas Trunojoyo Madura"</span><span class="code-operator">,</span> <span class="code-variable">year</span><span class="code-operator">:</span> <span class="code-string">"2025–present"</span> <span class="code-operator">},</span></span>
+              <span class="code-line indent1"><span class="code-operator">{</span> <span class="code-variable">level</span><span class="code-operator">:</span> <span class="code-string">"SMK"</span><span class="code-operator">,</span> <span class="code-variable">school</span><span class="code-operator">:</span> <span class="code-string">"SMKN Widang — TKJ"</span><span class="code-operator">,</span> <span class="code-variable">year</span><span class="code-operator">:</span> <span class="code-string">"2022–2025"</span> <span class="code-operator">},</span></span>
+              <span class="code-line indent1"><span class="code-operator">{</span> <span class="code-variable">level</span><span class="code-operator">:</span> <span class="code-string">"SMP"</span><span class="code-operator">,</span> <span class="code-variable">school</span><span class="code-operator">:</span> <span class="code-string">"SMP Negeri 2 Widang"</span><span class="code-operator">,</span> <span class="code-variable">year</span><span class="code-operator">:</span> <span class="code-string">"2019–2022"</span> <span class="code-operator">},</span></span>
+              <span class="code-operator">];</span>
+            </div>
+
+            <!-- tabel about me -->
+            <div class="section-title"><i class="fas fa-user"></i> About Me</div>
+            <div class="about-grid">
+              <div class="info-block">
+                <div class="info-block-title"><i class="fas fa-id-card"></i> Personal Information</div>
+                <div class="info-row">
+                  <div class="info-key">Full Name</div>
+                  <div class="info-val">Ahmad Bagus Indra Permadi</div>
+                </div>
+                <div class="info-row">
+                  <div class="info-key">University</div>
+                  <div class="info-val">Universitas Trunojoyo Madura</div>
+                </div>
+                <div class="info-row">
+                  <div class="info-key">Faculty</div>
+                  <div class="info-val">Teknik</div>
+                </div>
+                <div class="info-row">
+                  <div class="info-key">Study Program</div>
+                  <div class="info-val">Teknik Informatika</div>
+                </div>
+                <div class="info-row">
+                  <div class="info-key">Angkatan</div>
+                  <div class="info-val">2025</div>
+                </div>
+              </div>
+              <div class="info-block">
+                <div class="info-block-title"><i class="fas fa-graduation-cap"></i> Education</div>
+                <div class="info-row">
+                  <div class="info-key">S1 (2025 - 20xx)</div>
+                  <div class="info-val">Universitas Trunojoyo Madura<br><span style="color:var(--text-muted);font-size:12px">Teknik Informatika</span></div>
+                </div>
+                <div class="info-row">
+                  <div class="info-key">SMK</div>
+                  <div class="info-val">SMKN Widang<br><span style="color:var(--text-muted);font-size:12px">Teknik Komputer &amp; Jaringan</span></div>
+                </div>
+                <div class="info-row">
+                  <div class="info-key">SMP</div>
+                  <div class="info-val">SMP Negeri 2 Widang</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SKILLS SECTION ══ -->
+  <div class="section" id="section-skills">
+    <div class="editor-layout">
+      <div class="sidebar">
+        <div class="sidebar-header">Explorer</div>
+        <div class="file-tree">
+          <div class="tree-folder"><i class="fas fa-chevron-down" style="font-size:10px"></i> <i class="fas fa-folder-open"></i> SKILLS</div>
+          <div class="tree-children">
+            <div class="tree-file active"><i class="fas fa-network-wired" style="color:#61afef"></i> networking.js</div>
+            <div class="tree-file"><i class="fab fa-python" style="color:#3776ab"></i> python.py</div>
+            <div class="tree-file"><i class="fab fa-js" style="color:#f7df1e"></i> javascript.js</div>
+            <div class="tree-file"><i class="fab fa-php" style="color:#8892be"></i> php.php</div>
+            <div class="tree-file"><i class="fab fa-android" style="color:#3ddc84"></i> android.kt</div>
+            <div class="tree-file"><i class="fab fa-html5" style="color:#e44d26"></i> html5.html</div>
+          </div>
+        </div>
+      </div>
+      <div class="editor-content">
+        <div class="code-body" style="padding:32px 48px">
+          <div style="margin-bottom:12px">
+            <span class="code-comment">// skills.js — Technical &amp; Soft Skills</span>
+          </div>
+
+          <div class="section-title"><i class="fas fa-code"></i> Technical Skills</div>
+          <div class="skills-grid" id="skillsGrid"></div>
+
+          <div class="section-title"><i class="fas fa-brain"></i> Soft Skills</div>
+          <div class="softskill-list" id="softSkillList"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ EXPERIENCE SECTION ══ -->
+  <div class="section" id="section-experience">
+    <div class="editor-layout">
+      <div class="sidebar">
+        <div class="sidebar-header">Explorer</div>
+        <div class="file-tree">
+          <div class="tree-folder"><i class="fas fa-chevron-down" style="font-size:10px"></i> <i class="fas fa-folder-open"></i> EXPERIENCE</div>
+          <div class="tree-children">
+            <div class="tree-file active"><i class="fas fa-briefcase" style="color:#e5c07b"></i> work.json</div>
+            <div class="tree-file"><i class="fas fa-users" style="color:#98c379"></i> organization.json</div>
+            <div class="tree-file"><i class="fas fa-flag" style="color:#c678dd"></i> committee.json</div>
+          </div>
+        </div>
+      </div>
+      <div class="editor-content">
+        <div class="code-body" style="padding:32px 48px">
+          <div style="margin-bottom:24px">
+            <span class="code-comment">// experience.json — Work &amp; Organization</span>
+          </div>
+
+          <div class="section-title"><i class="fas fa-briefcase"></i> Pengalaman Kerja</div>
+          <div class="timeline" style="margin-bottom:40px">
+            <div class="timeline-item">
+              <div class="timeline-period"><i class="fas fa-clock"></i> 2024 – 2025</div>
+              <div class="timeline-title">Magang — 3NSPORTWEAR</div>
+              <div class="timeline-sub">Internship · Industri Olahraga &amp; Fashion</div>
+              <div style="margin-top:8px;font-size:13px;color:var(--text-muted);line-height:1.7">
+                Menjalani program magang di 3NSPORTWEAR, memperoleh pengalaman kerja nyata di lingkungan industri, mengembangkan kemampuan komunikasi profesional dan adaptasi dunia kerja.
+              </div>
+            </div>
+          </div>
+
+          <div class="section-title"><i class="fas fa-users"></i> Pengalaman Organisasi</div>
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-period"><i class="fas fa-clock"></i> 2025</div>
+              <div class="timeline-title">HIMATIF (Staf Muda) — Entrepreneurship</div>
+              <div class="timeline-sub">Himpunan Mahasiswa Teknik Informatika · Divisi Kewirausahaan</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-period"><i class="fas fa-clock"></i> 2026 – 2027</div>
+              <div class="timeline-title">HIMATIF — Advokesma</div>
+              <div class="timeline-sub">Himpunan Mahasiswa Teknik Informatika · Advokasi &amp; Kesejahteraan Mahasiswa</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-period"><i class="fas fa-clock"></i> 2026 – 2027</div>
+              <div class="timeline-title">IKMARO — Kominfo</div>
+              <div class="timeline-sub">Ikatan Mahasiswa Ronggolawe Tuban · Komunikasi &amp; Informasi</div>
+            </div>
+          </div>
+
+          <div class="section-title"><i class="fas fa-flag"></i> Pengalaman Kepanitiaan</div>
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-period"><i class="fas fa-clock"></i> 2025</div>
+              <div class="timeline-title">Panitia — IFAN 2025</div>
+              <div class="timeline-sub">CO Konsumsi · HIMATIF 2025</div>
+              <div style="margin-top:8px;font-size:13px;color:var(--text-muted);line-height:1.7">
+                Berperan sebagai CO Konsumsi dalam kepanitiaan IFAN 2025, bertanggung jawab memastikan kebutuhan konsumsi selama acara terpenuhi dengan baik, berkoordinasi dengan tim lain untuk kelancaran acara.
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-period"><i class="fas fa-clock"></i> 2025</div>
+              <div class="timeline-title">Panitia — FAST 2025</div>
+              <div class="timeline-sub">Anggota F&B · HIMATIF 2025</div>
+              <div style="margin-top:8px;font-size:13px;color:var(--text-muted);line-height:1.7">
+                Berperan sebagai anggota F&B dalam kepanitiaan FAST 2025, bertanggung jawab dalam menyediakan makanan dan minuman selama acara berlangsung.
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-period"><i class="fas fa-clock"></i> 2026</div>
+              <div class="timeline-title">Panitia — MILAD HIMATIF ke-24</div>
+              <div class="timeline-sub">Anggota PERKAP · HIMATIF 2026</div>
+              <div style="margin-top:8px;font-size:13px;color:var(--text-muted);line-height:1.7">
+                Berperan sebagai anggota PERKAP dalam kepanitiaan Milad HIMATIF ke-24, bertanggung jawab dalam perencanaan dan pelaksanaan acara perayaan ulang tahun HIMATIF.
+                </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-period"><i class="fas fa-clock"></i> 2026</div>
+              <div class="timeline-title">Panitia — HALBI IKMARO 2026</div>
+              <div class="timeline-sub">Anggota PDD · IKMARO 2026</div>
+              <div style="margin-top:8px;font-size:13px;color:var(--text-muted);line-height:1.7">
+                Berperan sebagai anggota PDD dalam kepanitiaan Halal Bihalal IKMARO 2026, bertanggung jawab dalam perencanaan dan pelaksanaan acara halal bihalal IKMARO.
+                </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-period"><i class="fas fa-clock"></i> 2026</div>
+              <div class="timeline-title">Panitia — PENGMAS IKMARO 2026</div>
+              <div class="timeline-sub">Anggota PDD · IKMARO 2026</div>
+              <div style="margin-top:8px;font-size:13px;color:var(--text-muted);line-height:1.7">
+                Berperan sebagai anggota PDD dalam kepanitiaan Pengmas IKMARO 2026, bertanggung jawab dalam perencanaan dan pelaksanaan acara pengmas IKMARO.
+                </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-period"><i class="fas fa-clock"></i> 2026</div>
+              <div class="timeline-title">Panitia — Sosialisasi Kampus</div>
+              <div class="timeline-sub">Anggota PDD · IKMARO 2026</div>
+              <div style="margin-top:8px;font-size:13px;color:var(--text-muted);line-height:1.7">
+                Berperan sebagai anggota PDD dalam kepanitiaan Sosialisasi Kampus IKMARO 2026, bertanggung jawab dalam perencanaan dan pelaksanaan acara sosialisasi kampus IKMARO.
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ PROJECTS / TERMINAL SECTION ══ -->
+  <div class="section" id="section-projects">
+    <div class="code-body" style="padding:32px 60px">
+      <div style="margin-bottom:24px">
+        <span class="code-comment">#!/bin/bash — terminal.sh</span>
+      </div>
+
+      <div class="terminal-window">
+        <div class="terminal-bar">
+          <div class="term-dot r"></div>
+          <div class="term-dot y"></div>
+          <div class="term-dot g"></div>
+          <div class="terminal-title-bar">bash — Ahmad@UTM-TIF: ~/portfolio</div>
+        </div>
+        <div class="terminal-body">
+          <div><span class="term-prompt">ahmad@UTM-TIF</span><span class="term-out">:</span><span class="term-path">~/portfolio</span><span class="term-out">$ </span><span class="term-cmd">whoami</span></div>
+          <div class="term-out">Ahmad Bagus Indra Permadi — Mahasiswa Teknik Informatika 2025</div><br>
+          <div><span class="term-prompt">ahmad@UTM-TIF</span><span class="term-out">:</span><span class="term-path">~/portfolio</span><span class="term-out">$ </span><span class="term-cmd">cat skills.txt</span></div>
+          <div class="term-out">✅ Instalasi &amp; Konfigurasi Jaringan Komputer</div>
+          <div class="term-out">✅ Arduino UNO — IoT &amp; Embedded Systems</div>
+          <div class="term-out">✅ HTML5 / CSS3 / JavaScript (Frontend)</div>
+          <div class="term-out">✅ Python (Django, Flask, Data Science)</div>
+          <div class="term-out">✅ PHP / Laravel (Backend Web)</div>
+          <div class="term-out">✅ Java / Kotlin (Android Development)</div>
+          <div class="term-out">✅ Data Structures &amp; Algorithms</div><br>
+          <div><span class="term-prompt">ahmad@UTM-TI</span><span class="term-out">:</span><span class="term-path">~/portfolio</span><span class="term-out">$ </span><span class="term-cmd">git log --oneline</span></div>
+          <div class="term-out"><span class="term-highlight">a1b2c3d</span> Joined IKMARO as Kominfo division (2026)</div>
+          <div class="term-out"><span class="term-highlight">e4f5g6h</span> Active in HIMATIF Advokesma (2026)</div>
+          <div class="term-out"><span class="term-highlight">i7j8k9l</span> Completed internship at 3NSPORTWEAR (2025)</div>
+          <div class="term-out"><span class="term-highlight">m0n1o2p</span> Joined HIMATIF Katalis Entrepreneurship (2025)</div>
+          <div class="term-out"><span class="term-highlight">q3r4s5t</span> Enrolled UTM Teknik Informatika (2025)</div>
+          <div class="term-out"><span class="term-highlight">u6v7w8x</span> Graduated SMKN Widang TKJ (2025)</div><br>
+          <div><span class="term-prompt">ahmad@UTM-TI</span><span class="term-out">:</span><span class="term-path">~/portfolio</span><span class="term-out">$ </span><span class="term-cmd">echo $CURRENT_STATUS</span></div>
+          <div class="term-out">"#IN ENGINEERING WE TRUST SMART GUY WILL ALWAYS BE THE TOP TIER OF MY TYPE"</div><br>
+          <div><span class="term-prompt">ahmad@UTM-TI</span><span class="term-out">:</span><span class="term-path">~/portfolio</span><span class="term-out">$ </span><span class="term-cmd" id="typingCmd"></span><span class="cursor"></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ COMMENTS SECTION ══ -->
+  <div class="section" id="section-comments">
+    <div class="comment-section">
+      <div class="section-title" style="font-size:13px;margin-bottom:24px"><i class="fas fa-comment-dots"></i> Comments &amp; Feedback — comments.md</div>
+
+      <div class="comment-form">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--accent-blue);margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border)">
+          <i class="fas fa-plus"></i> Leave a Comment
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Your Name *</label>
+            <input class="form-input" id="commentName" placeholder="Ahmad Bagus" type="text">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Status/Pekerjaan</label>
+            <input class="form-input" id="commentEmail" placeholder="Mahasiswa S1 Teknik Informatika - UTM" type="text">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Nomor WA/Email</label>
+            <input class="form-input" id="commentContact" placeholder="081234567890/ahmadbagusindra@gmail.com" type="text">
+          </div>
+        </div>
+        <div class="form-group" style="margin-bottom:16px">
+          <label class="form-label">Message *</label>
+          <textarea class="form-textarea" id="commentText" placeholder="Tuliskan komentar atau feedback kamu di sini..."></textarea>
+        </div>
+        <button class="form-submit" onclick="submitComment()">
+          <i class="fas fa-paper-plane"></i> Submit Comment
+        </button>
+      </div>
+
+      <div class="section-title" style="font-size:13px;margin-bottom:16px"><i class="fas fa-list"></i> All Comments (<span id="commentCount">0</span>)</div>
+      <div class="comment-list" id="commentList">
+        <div class="empty-state" id="emptyState">
+          <i class="fas fa-comment-slash"></i>
+          Belum ada komentar. Jadilah yang pertama! 🎉
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end main-wrapper -->
+
+<!-- CUSTOM CURSOR ELEMENTS -->
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
+<canvas id="cursor-trail-canvas"></canvas>
+
+<!-- CUSTOM FOOTER -->
+<div class="custom-footer">
+  <a href="https://wa.me/6285733188730" target="_blank" class="social-link whatsapp" title="WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+  <a href="https://instagram.com/bagus.js_" target="_blank" class="social-link instagram" title="Instagram">
+    <i class="fab fa-instagram"></i>
+  </a>
+  <a href="https://linkedin.com/in/ahmadbagusindra" target="_blank" class="social-link linkedin" title="LinkedIn">
+    <i class="fab fa-linkedin-in"></i>
+  </a>
+  <a href="mailto:ahmadbagusindraprrmadi@gmail.com?subject=Halo%20Saya%20Ingin%20Bertanya" class="social-link gmail" title="Gmail">
+    <i class="fas fa-envelope"></i>
+  </a>
+</div>
+
+<!-- Link ke file JavaScript eksternal -->
+<script type="module" src="script.js"></script>
+</body>
+</html>
